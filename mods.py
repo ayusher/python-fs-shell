@@ -3,18 +3,19 @@ from serial import Serial
 from fake_rpi import smbus
 from threading import Thread
 import heapq
+import json
 
 class radio():
-    def __init__(self, port, master):
-        self.ser = Serial(port)
-        self.ser.write(b"AT")
+    def __init__(self, ser_port):
+        self.ser = Serial(ser_port)
+        self.ser.write(b"AT\n")
         self.send_queue = []
         self.listen_queue = []
-        
         self.lock = threading.Lock()
 
         self.thread_stop = False
-
+        #self.ser.write(b"AT")
+        #print(os.read(master, 1000))
         self.start_threads()
 
     def enqueue(self, raw_data, priority):
