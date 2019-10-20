@@ -7,9 +7,8 @@ verify_ssl = true
 
 [packages]
 fake-rpi = "*"
-ptyprocess = "*"
 pyserial = "*"
-heapq = "*"
+ptyprocess = "*"
 
 [requires]
 python_version = "3.6"
