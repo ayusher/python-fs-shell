@@ -6,13 +6,13 @@ import heapq
 import json
 
 class radio():
-    def __init__(self, ser_port):
+    def __init__(self, ser_port, debug):
         self.ser = Serial(ser_port)
-        self.ser.write(b"AT\n")
+        #self.ser.write(b"AT\n")
         self.send_queue = []
         self.listen_queue = []
         self.lock = threading.Lock()
-
+        self.debug = debug
         self.thread_stop = False
         #self.ser.write(b"AT")
         #print(os.read(master, 1000))
@@ -29,14 +29,17 @@ class radio():
                 return
             if len(self.send_queue)>0:
                 with self.lock:
-                    self.ser.write(str.encode(heapq.heappop(self.send_queue)[1]))
+                    self.ser.write(str.encode(heapq.heappop(self.send_queue)[1]+"\n"))
                     time.sleep(.5)
     
     def listen(self):
         while True:
             if self.thread_stop:
                 return
-            heapq.heappush(self.listen_queue, self.ser.readline())
+            p = self.ser.readline().decode("utf-8")
+            if self.debug:
+                print(p, end = "")
+            heapq.heappush(self.listen_queue, p)
 
     def restart_threads(self):
         self.thread_stop = True

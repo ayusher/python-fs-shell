@@ -1,11 +1,20 @@
 import os, time
+from threading import Thread
 from serial import Serial
 
 gs_port = "/dev/pts/3"
 ser = Serial(gs_port)
 
-while True:
-	try:
+def listen():
+	while True:
 		print("Flight: "+ser.readline().decode("utf-8"))
-	except Exception as e:
-		print(e)
+		print("\nλ: ", end = "")
+def send():
+	while True:
+		ser.write(str.encode(input("λ: ")+"\n"))
+
+
+t1 = Thread(target = listen)
+t2 = Thread(target = send)
+t2.start()
+t1.start()
