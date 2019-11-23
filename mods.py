@@ -4,6 +4,7 @@ from fake_rpi import smbus
 from threading import Thread
 import heapq
 import json
+import processor
 
 class radio():
     def __init__(self, ser_port, debug):
@@ -31,7 +32,7 @@ class radio():
                 with self.lock:
                     self.ser.write(str.encode(heapq.heappop(self.send_queue)[1]+"\n"))
                     time.sleep(.5)
-    
+
     def listen(self):
         while True:
             if self.thread_stop:
@@ -40,6 +41,10 @@ class radio():
             if self.debug:
                 print(p, end = "")
             heapq.heappush(self.listen_queue, p)
+
+    def process(self, batch_size):
+        for i in range(min(batch_size, len(self.listen_queue))):
+            processor.run(heapq.heappop(self.listen_queue))
 
     def restart_threads(self):
         self.thread_stop = True
