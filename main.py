@@ -24,5 +24,5 @@ if __name__ == "__main__":
     
     while True:
         time.sleep(execute_time)
-	submodules["radio"].enqueue({"timestamp": time.time(), "heartbeat":"AT ALIVE"}, 0)
+        submodules["radio"].enqueue({"timestamp": time.time(), "heartbeat":"AT ALIVE"}, 0)
         submodules["radio"].process(batch_size)
