@@ -44,7 +44,7 @@ class radio():
 
     def process(self, batch_size):
         for i in range(min(batch_size, len(self.listen_queue))):
-            processor.run(heapq.heappop(self.listen_queue))
+            self.enqueue({"timestamp": time.time(), "response": processor.run(heapq.heappop(self.listen_queue))}, 1)
 
     def restart_threads(self):
         self.thread_stop = True
