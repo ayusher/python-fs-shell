@@ -20,7 +20,7 @@ if __name__ == "__main__":
         print(i, " is active.")
 
     time.sleep(1)
-    submodules["radio"].enqueue({"timestamp": time.time(), "heartbeat":"AT ALIVE"}, 0)
+    submodules["radio"].enqueue({"timestamp": time.time(), "heartbeat":"AT AWAKE"}, 0)
     
     while True:
         time.sleep(execute_time)

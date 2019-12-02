@@ -59,7 +59,9 @@ class radio():
         
     def start_threads(self):
         self.list_thread = Thread(target = self.listen)
+        self.list_thread.daemon = True
         self.send_thread = Thread(target = self.send)
+        self.send_thread.daemon = True
         self.list_thread.start()
         self.send_thread.start()
 
@@ -123,6 +125,6 @@ class imu(): #MPU6050
 
         return actual_temp
 
-    
+
     def listen(self):
         return self.ser.read()
