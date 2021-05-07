@@ -1,0 +1,7 @@
+Radio_1:
+     MSG_IN_1: read
+
+GPS:
+     LON: read_lon
+     LAT: read_lat
+     ALT: read_alt
